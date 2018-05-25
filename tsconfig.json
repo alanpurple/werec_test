@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "target": "es5",
+    "lib": ["es2015","dom"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "importHelpers": true
+  },
+  "exclude": [
+    "wwwroot/lib",
+    "wwwroot/aot/node_modules",
+    "node_modules"
+  ],
+  "compileOnSave": true
+}

@@ -3,3 +3,13 @@
 ################################################################################
 
 /.vs
+/node_modules
+/obj
+/Properties
+/WeRecServer/node_modules
+/wwwroot/lib
+/Startup.cs
+/Program.cs
+/package-lock.json
+wwwroot/app/*.js
+wwwroot/app/*.map

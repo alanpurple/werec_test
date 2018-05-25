@@ -1,0 +1,32 @@
+﻿html, body {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+h4 {
+    margin-left: 10px;
+}
+
+.mat-form-field {
+    max-width: 300px;
+}
+
+.mat-select {
+    max-width: 300px;
+    margin: 10px;
+}
+
+.mat-slider {
+    max-width: 300px;
+}
+
+button.mat-button, button.mat-raised-button {
+    max-width: 200px;
+    margin: 10px;
+}

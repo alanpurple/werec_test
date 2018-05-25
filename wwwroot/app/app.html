@@ -1,0 +1,41 @@
+﻿<mat-toolbar color="primary">
+    <button mat-icon-button (click)="sidemenu.toggle()">
+        <mat-icon class="mat-24">menu</mat-icon>
+    </button>
+    <!--<span fxFlex></span>
+    <button *ngIf="!user" mat-button routerLink="/signup">회원가입</button>
+    <button *ngIf="!user" mat-button routerLink="/login">로그인</button>
+    <div *ngIf="user">
+        <mat-menu #alertMenu>
+            <button *ngFor="let msg of msgs; let i=index" mat-menu-item (click)="confirmMsg(i)">
+                {{msg}}
+            </button>
+        </mat-menu>
+        <button mat-icon-button [mat-menu-trigger-for]="accountMenu">
+            <mat-icon>person</mat-icon>
+        </button>
+        <mat-menu #accountMenu="matMenu">
+            <button mat-menu-item routerLink="/user-info">정보관리</button>
+            <button mat-menu-item>친구관리</button>
+        </mat-menu>
+    </div>
+    <a *ngIf="user" mat-button target="_self" href="/account/logout">로그아웃</a>-->
+</mat-toolbar>
+<mat-sidenav-container fxFlex>
+    <mat-sidenav #sidemenu [mode]="sidenavMode" [opened]="isOpened">
+        <mat-list>
+            <mat-list-item>
+                <button mat-icon-button routerLink="/" (click)="handleMenu(sidemenu)">
+                    <mat-icon class="mat-24">home</mat-icon>
+                </button>
+            </mat-list-item>
+            <mat-list-item>
+                <button mat-button routerLink="/prediction-results"
+                        (click)="handleMenu(sidemenu)">
+                    테스트 결과 보기
+                </button>
+            </mat-list-item>
+        </mat-list>
+    </mat-sidenav>
+    <router-outlet></router-outlet>
+</mat-sidenav-container>

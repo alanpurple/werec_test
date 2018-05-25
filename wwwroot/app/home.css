@@ -1,0 +1,9 @@
+﻿.test-container {
+    display: flex;
+    flex-direction: column;
+    max-height: 800px;
+}
+
+.mat-table{
+    overflow:auto;
+}
