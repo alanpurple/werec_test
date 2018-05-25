@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="WeRecServer\**" />
+    <Content Remove="WeRecServer\**" />
+    <EmbeddedResource Remove="WeRecServer\**" />
+    <None Remove="WeRecServer\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="wwwroot\app\dealinfo.service.ts" />
     <Content Remove="wwwroot\app\prediction.data.ts" />
     <Content Remove="wwwroot\app\prediction.results.ts" />

@@ -3,11 +3,10 @@
 ################################################################################
 
 /.vs
-/node_modules
 /obj
 /Properties
-/WeRecServer/node_modules
-/wwwroot/lib
+node_modules/
+lib/
 /Startup.cs
 /Program.cs
 /package-lock.json
