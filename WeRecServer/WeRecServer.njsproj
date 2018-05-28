@@ -32,20 +32,35 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="app.js" />
+    <Compile Include="connection-praha.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="connection.js" />
     <Compile Include="es-service.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="models\DealInfo.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="models\MemberActionInfo.js">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="routes\data-route.js">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="routes\import-route.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="routes\results-route.js">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="set-mongoose.js" />
     <Content Include="package.json" />
     <Content Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />
+    <Folder Include="models\" />
     <Folder Include="routes\" />
     <Folder Include="results\" />
   </ItemGroup>

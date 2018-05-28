@@ -23,9 +23,10 @@ app.get(['/', '/prediction-results'],
 
 // prediction result for certain history
 app.use('/results', require('./routes/results-route'));
-
 // training data, contains each users' history data
 app.use('/data', require('./routes/data-route'));
+// data import route
+app.use('/import', require('./routes/import-route'));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
