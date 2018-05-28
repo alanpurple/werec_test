@@ -21,7 +21,10 @@ app.use(express.static(rootPath));
 app.get(['/', '/prediction-results'],
     (req, res) => res.sendFile(path.join(rootPath, 'index.html')));
 
+// prediction result for certain history
 app.use('/results', require('./routes/results-route'));
+
+// training data, contains each users' history data
 app.use('/data', require('./routes/data-route'));
 
 // catch 404 and forward to error handler

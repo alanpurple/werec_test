@@ -15,9 +15,19 @@ router.get('/', (req, res) => {
     });
 });
 
-router.get('/single/:name', (req, res) => {
-    
-})
+router.get('/single/:id', (req, res) => {
+    esservice.getOne(req.params.id).then(body => {
+        const response = body.hits.hits[0]._source;
+        res.send({
+            id: req.params.id,
+            name: response._2,
+            url: resposnse._3
+        });
+    }, err => {
+        console.error(err);
+        res.sendStatus(500);
+    });
+});
 
 router.get('/:name', (req, res) => {
     fs.stat('../results/' + req.params.name, (err, stat) => {
