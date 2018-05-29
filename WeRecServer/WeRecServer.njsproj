@@ -45,6 +45,9 @@
     <Compile Include="models\MemberActionInfo.js">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="models\MemberInfo.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="routes\data-route.js">
       <SubType>Code</SubType>
     </Compile>
