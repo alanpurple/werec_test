@@ -39,13 +39,16 @@
     <Compile Include="es-service.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="models\DealInfo.js">
+    <Compile Include="models\History.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="models\MemberActionInfo.js">
+    <Compile Include="models_praha\DealInfo.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="models\MemberInfo.js">
+    <Compile Include="models_praha\MemberActionInfo.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="models_praha\MemberInfo.js">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="routes\data-route.js">
@@ -63,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />
+    <Folder Include="models_praha\" />
     <Folder Include="models\" />
     <Folder Include="routes\" />
     <Folder Include="results\" />

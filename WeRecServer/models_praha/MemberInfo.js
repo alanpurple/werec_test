@@ -23,3 +23,6 @@ const MemberInfoSchema = new Schema({
     g: Number,
     d: [SubSchema2]
 });
+
+module.exports = require('../connection-praha')
+    .model('MemberInfo', MemberInfoSchema);

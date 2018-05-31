@@ -23,3 +23,6 @@ MemberActionInfoSchema = new Schema({
         }
     }
 });
+
+module.exports = require('../connection-praha')
+    .model('MemberActionInfo', MemberActionInfoSchema);

@@ -24,3 +24,6 @@ const DealInfoSchema = new Schema({
     dc: String,
     t: Object
 });
+
+module.exports = require('../connection-praha')
+    .model('DealInfoSchema', DealInfoSchema);
