@@ -1,0 +1,12 @@
+﻿<form (ngSubmit)="submitRequest()" fxLayout="column" #requestForm="ngForm">
+    <mat-checkbox [(ngModel)]="noLimit">limit 없음</mat-checkbox>
+    <mat-form-field ngIf="!noLimit">
+        <input matInput type="number" placeholder="최대 user 수" [(ngModel)]="request.numUsers"
+               name="numUsers" min="100" step="10" required />
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput [matDatepicker]="picker" placeholder="해당일" [(ngModel)]="request.date" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+</form>

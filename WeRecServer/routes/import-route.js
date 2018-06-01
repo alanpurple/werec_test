@@ -13,13 +13,12 @@ router.get('/user/:number', (req, res) =>
             res.sendStatus(500);
         }));
 
-const LIMIT = 5000;
-
 router.post('/hist', (req, res) => {
     let date = new Date(req.body.date);
+    // This is the way praha saves dates
     date = date.getFullYear.toString() + (date.getMonth() + 1).toString()
         + date.getDate().toString();
-    MemberAction.find({ day: date }, { limit: LIMIT })
+    MemberAction.find({ day: date }, { limit: req.body.numUser })
         .then(data => {
             let historyGroup = [];
             data.forEach(elem => {
@@ -30,6 +29,9 @@ router.post('/hist', (req, res) => {
                 };
                 historyGroup.push(tempHistory);
             });
+            let result = new History({
+
+            })
             return History.create(historyGroup).then(
                 () => res.send('Import success with' + LIMIT + ' member histories'));
         }).catch(err => {

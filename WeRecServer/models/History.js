@@ -7,7 +7,6 @@ const PerUserSchema = new Schema({
 }, { _id: false });
 
 const HistorySchema = new Schema({
-    _id: Number,
     day: Date,
     data: [PerUserSchema]
 });

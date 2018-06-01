@@ -13,9 +13,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\app\data-manager.ts" />
+    <Content Remove="wwwroot\app\data.service.ts" />
     <Content Remove="wwwroot\app\dealinfo.service.ts" />
+    <Content Remove="wwwroot\app\import.request.data.ts" />
     <Content Remove="wwwroot\app\prediction.data.ts" />
     <Content Remove="wwwroot\app\prediction.results.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove=".gitignore" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,7 +38,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="wwwroot\app\data-manager.ts" />
+    <TypeScriptCompile Include="wwwroot\app\data.service.ts" />
     <TypeScriptCompile Include="wwwroot\app\dealinfo.service.ts" />
+    <TypeScriptCompile Include="wwwroot\app\import.request.data.ts" />
     <TypeScriptCompile Include="wwwroot\app\prediction.data.ts" />
     <TypeScriptCompile Include="wwwroot\app\prediction.results.ts" />
   </ItemGroup>
