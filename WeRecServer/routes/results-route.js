@@ -1,7 +1,15 @@
 ﻿const router = require('express').Router();
 const parse = require('csv-parse');
 const fs = require('fs');
-const esservice=require('../es-service');
+const grpc = require('grpc');
+const esservice = require('../es-service');
+
+const PROTO_PATH = __dirname + '/../../../item_embed_rec/wprecservice.proto';
+
+const wprec_proto = grpc.load(PROTO_PATH).wprecservice;
+
+const client = new wprec_proto.WpRecService('localhost:50051',
+    grpc.credentials.createInsecure());
 
 // send list of result csv files
 router.get('/', (req, res) => {
@@ -75,6 +83,30 @@ router.get('/:name', (req, res) => {
                 }))
         }
     })
+});
+
+router.post('/user_profile', (req, res) => {
+    if (!req.body.from || !req.body.to) {
+        res.sendStatus(401);
+        return;
+    }
+    const from_date = new Date(req.body.from);
+    const to_date = new Date(req.body.to);
+})
+
+router.post('/predict', (req, res) => {
+    if (!req.body.methodName || !req.body.dayFrom || !req.body.dayTo || !req.body.predictMoment || !req.body.user) {
+        res.sendStatus(401);
+        return;
+    }
+    client.getRecommend(req.body, (err, result) => {
+        if (err || result.error > -1) {
+            if (err)
+                console.error(err);
+            res.sendStatus(500);
+        }
+        res.send(result.result);
+    });
 });
 
 module.exports = router;
