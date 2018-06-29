@@ -1,6 +1,7 @@
-﻿export interface PredictionData {
-    dealId: number;
+﻿export class PredictionData {
+    id: number;
+    slot: number;
     score: number;
-    name: string;
-    url: string;
+    title: string = '';
+    url: string = '';
 }

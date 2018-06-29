@@ -16,10 +16,14 @@
     <Content Remove="package-lock.json" />
     <Content Remove="wwwroot\app\data-manager.ts" />
     <Content Remove="wwwroot\app\data.service.ts" />
+    <Content Remove="wwwroot\app\deal.data.ts" />
     <Content Remove="wwwroot\app\dealinfo.service.ts" />
     <Content Remove="wwwroot\app\import.request.data.ts" />
     <Content Remove="wwwroot\app\prediction.data.ts" />
+    <Content Remove="wwwroot\app\prediction.request.data.ts" />
     <Content Remove="wwwroot\app\prediction.results.ts" />
+    <Content Remove="wwwroot\app\prediction.service.ts" />
+    <Content Remove="wwwroot\app\prediction.table.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,8 +47,12 @@
     <TypeScriptCompile Include="wwwroot\app\data.service.ts" />
     <TypeScriptCompile Include="wwwroot\app\dealinfo.service.ts" />
     <TypeScriptCompile Include="wwwroot\app\import.request.data.ts" />
+    <TypeScriptCompile Include="wwwroot\app\deal.data.ts" />
     <TypeScriptCompile Include="wwwroot\app\prediction.data.ts" />
+    <TypeScriptCompile Include="wwwroot\app\prediction.request.data.ts" />
     <TypeScriptCompile Include="wwwroot\app\prediction.results.ts" />
+    <TypeScriptCompile Include="wwwroot\app\prediction.service.ts" />
+    <TypeScriptCompile Include="wwwroot\app\prediction.table.ts" />
   </ItemGroup>
 
 </Project>

@@ -3,6 +3,7 @@ const parse = require('csv-parse');
 const fs = require('fs');
 const grpc = require('grpc');
 const esservice = require('../es-service');
+const csvparse = require('csv-parse');
 
 const PROTO_PATH = __dirname + '/../../../item_embed_rec/wprecservice.proto';
 
@@ -86,19 +87,66 @@ router.get('/:name', (req, res) => {
 });
 
 router.post('/user_profile', (req, res) => {
-    if (!req.body.from || !req.body.to) {
+    if (!req.body.dayFrom || !req.body.dayTo) {
         res.sendStatus(401);
         return;
     }
-    const from_date = new Date(req.body.from);
-    const to_date = new Date(req.body.to);
-})
+    const fromDate = new Date(req.body.dayFrom);
+    const toDate = new Date(req.body.dayTo);
+    fromMonth = fromDate.getMonth() + 1;
+    if (fromMonth < 10) fromMonth = '0' + fromMonth;
+    fromDay = fromDate.getDate();
+    if (fromDay < 10) fromDay = '0' + fromDay;
+    toMonth = toDate.getMonth() + 1;
+    if (toMonth < 10) toMonth = '0' + toMonth;
+    toDay = toDate.getDate();
+    if (toDay < 10) toDay = '0' + toDay;
+    const profile_file = '../../item_embed_rec/profile_' + fromMonth + '-' + fromDay + '_' + toMonth + '-' + toDay + '.csv';
+    const filestream = fs.createReadStream(profile_file);
+    const parser = csvparse();
+    let userIds = [];
+    parser.on('readable', () => {
+        while (record = parser.read()) {
+            userIds.push(record[0]);
+        }
+        res.send(userIds);
+        parser.end();
+    });
+    parser.on('error', err => {
+        console.error(err);
+        res.sendStatus(500);
+        parser.end();
+    });
+    filestream.pipe(parser);
+});
 
 router.post('/predict', (req, res) => {
     if (!req.body.methodName || !req.body.dayFrom || !req.body.dayTo || !req.body.predictMoment || !req.body.user) {
         res.sendStatus(401);
         return;
     }
+    const fromDate = new Date(req.body.dayFrom);
+    const toDate = new Date(req.body.dayTo);
+    fromMonth = fromDate.getMonth() + 1;
+    if (fromMonth < 10) fromMonth = '0' + fromMonth;
+    fromDay = fromDate.getDate();
+    if (fromDay < 10) fromDay = '0' + fromDay;
+    toMonth = toDate.getMonth() + 1;
+    if (toMonth < 10) toMonth = '0' + toMonth;
+    toDay = toDate.getDate();
+    if (toDay < 10) toDay = '0' + toDay;
+    req.body.dayFrom = fromMonth + '-' + fromDay;
+    req.body.dayTo = toMonth + '-' + toDay;
+
+    const pmDate = new Date(req.body.predictMoment);
+    let pmMonth = pmDate.getMonth() + 1;
+    if (pmMonth < 10) pmMonth = '0' + pmMonth;
+    let pmDay = pmDate.getDate();
+    if (pmDay < 10) pmDay = '0' + pmDay;
+    let pmHour = pmDate.getHours();
+    if (pmHour < 10) pmHour = '0' + pmHour;
+    req.body.predictMoment = pmDate.getFullYear() + '-' + pmMonth + '-' + pmDay + ' ' + pmHour;
+
     client.getRecommend(req.body, (err, result) => {
         if (err || result.error > -1) {
             if (err)

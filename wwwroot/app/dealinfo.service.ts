@@ -5,7 +5,7 @@ import { catchError, map } from 'rxjs/operators';
 import { Client, SearchResponse } from 'elasticsearch';
 import { ErrorAlert } from './error.alert';
 
-import { PredictionData } from './prediction.data';
+import { DealData } from './deal.data';
 
 @Injectable()
 export class DealInfoService {
@@ -31,11 +31,11 @@ export class DealInfoService {
         });
     }
 
-    getResults(name: string): Observable<PredictionData[]> {
-        return this.http.get<PredictionData[]>('/results/' + name);
+    getResults(name: string): Observable<DealData[]> {
+        return this.http.get<DealData[]>('/results/' + name);
     }
 
-    getSingleResult(id: number): Observable<PredictionData> {
-        return this.http.get<PredictionData>('/results/single/' + id);
+    getSingleResult(id: number): Observable<DealData> {
+        return this.http.get<DealData>('/results/single/' + id);
     }
 }

@@ -1,7 +1,7 @@
 ﻿import { Component,OnInit } from '@angular/core';
 
 import { DealInfoService } from './dealinfo.service';
-import { PredictionData } from './prediction.data';
+import { DealData } from './deal.data';
 import { ErrorAlert } from './error.alert';
 
 @Component({
@@ -12,7 +12,7 @@ import { ErrorAlert } from './error.alert';
 export class PredictionResults implements OnInit {
     constructor(private dealInfoService: DealInfoService,
         private errorAlert: ErrorAlert) { }
-    data: PredictionData[] = [];
+    data: DealData[] = [];
 
     ngOnInit() {
     }
