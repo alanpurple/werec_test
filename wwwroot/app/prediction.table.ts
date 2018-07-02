@@ -3,8 +3,8 @@ import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 
 import { PredictionData } from './prediction.data';
 import { PredictionRequestData } from './prediction.request.data';
-import { PredictionResultData } from './prediction.result.data';
 import { PredictionService } from './prediction.service';
+import { DealInfoService } from './dealinfo.service';
 import { ErrorAlert } from './error.alert';
 import { Data } from '@angular/router';
 
@@ -13,7 +13,9 @@ import { Data } from '@angular/router';
     templateUrl: './prediction.table.html'
 })
 export class PredictionTable {
-    constructor(private predictionService: PredictionService,
+    constructor(
+        private predictionService: PredictionService,
+        private dealInfoService: DealInfoService,
         private errorAlert: ErrorAlert) {
         this.dataSource = new MatTableDataSource();
     }
@@ -22,8 +24,8 @@ export class PredictionTable {
 
     selectedId: number;
     userIds: number[];
-    dataSource: MatTableDataSource<PredictionResultData>;
-    displayedColumns: string[] = ['id', 'slot', 'score'];
+    dataSource: MatTableDataSource<{}>;
+    displayedColumns: string[] = ['id', 'slot', 'title', 'score', 'url'];
     fromDate: Date;
     toDate: Date;
     minDate: Date = new Date(2018, 2, 1);
@@ -76,6 +78,17 @@ export class PredictionTable {
                 this.dataSource.data.slice();
                 this.dataSource.paginator = this.paginator;
                 this.dataSource.sort = this.sort;
+                this.dataSource.data.forEach(elem => {
+                    this.dealInfoService.getItem(elem['id'])
+                        .then(body => {
+                            let response = body.hits.hits[0];
+                            elem['title'] = response._source['_2'];
+                            elem['url'] = response._source['_3'];
+                        }, err => {
+                            console.error(err);
+                        });
+                });
+                
             }, err => this.errorAlert.open(err));
     }
 }
