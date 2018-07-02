@@ -13,9 +13,11 @@ import { AppRouting } from './app.routing';
 
 import { Home } from './home';
 import { PredictionResults } from './prediction.results';
+import { PredictionTable } from './prediction.table';
 import { ErrorDialog, ErrorAlert } from './error.alert';
 import { ConfirmDialog, ConfirmDialogTemplate } from './confirm.dialog';
 import { DealInfoService } from './dealinfo.service';
+import { PredictionService } from './prediction.service';
 
 @NgModule({
     imports: [
@@ -26,10 +28,11 @@ import { DealInfoService } from './dealinfo.service';
         AppRouting
     ],
     declarations: [
-        App, Home, ErrorDialog, ConfirmDialogTemplate, PredictionResults
+        App, Home, ErrorDialog, ConfirmDialogTemplate, PredictionResults,
+        PredictionTable
     ],
     providers: [
-        ErrorAlert, ConfirmDialog, DealInfoService
+        ErrorAlert, ConfirmDialog, DealInfoService, PredictionService
     ],
     bootstrap: [App],
     entryComponents: [

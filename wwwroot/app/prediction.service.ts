@@ -5,14 +5,15 @@ import { catchError, map } from 'rxjs/operators';
 import { ErrorAlert } from './error.alert';
 
 import { PredictionRequestData } from './prediction.request.data';
+import { PredictionResultData } from './prediction.result.data';
 
 @Injectable()
 export class PredictionService {
     constructor(private http: HttpClient) { }
     getUsers(fromDate: Date, toDate: Date): Observable<number[]> {
-        return this.http.post<number[]>('/results/user_profile', { fromDate: fromDate, toDate: toDate });
+        return this.http.post<number[]>('/results/user_profile', { dayFrom: fromDate,dayTo: toDate });
     }
-    getPrediction(data: PredictionRequestData): Observable<{}[]> {
-        return this.http.post<{}[]>('/results/predict', data);
+    getPrediction(data: PredictionRequestData): Observable<PredictionResultData[]> {
+        return this.http.post<PredictionResultData[]>('/results/predict', data);
     }
 }

@@ -29,7 +29,7 @@
     map['@angular/cdk'] = 'lib/@angular/cdk/bundles/cdk.umd.js';
     var cdkModules = ['accordion','a11y', 'bidi', 'coercion', 'collections', 'keycodes','layout',
         'observers', 'overlay', 'platform', 'portal', 'rxjs', 'scrolling', 'table', 'stepper', 'text-field', 'tree'];
-    var flexModules = ['core', 'flex', 'extended', 'server'];
+    var flexModules = ['core', 'flex', 'extended', 'server','grid'];
 
     cdkModules.forEach(function (name) {
         map['@angular/cdk/' + name] = 'lib/@angular/cdk/bundles/cdk-' + name + '.umd.min.js';

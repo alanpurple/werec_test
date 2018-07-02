@@ -1,8 +1,9 @@
-﻿import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+﻿import { Component, ViewChild } from '@angular/core';
+import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 
 import { PredictionData } from './prediction.data';
 import { PredictionRequestData } from './prediction.request.data';
+import { PredictionResultData } from './prediction.result.data';
 import { PredictionService } from './prediction.service';
 import { ErrorAlert } from './error.alert';
 import { Data } from '@angular/router';
@@ -11,18 +12,21 @@ import { Data } from '@angular/router';
     moduleId: module.id,
     templateUrl: './prediction.table.html'
 })
-export class PredictionTable implements OnInit {
+export class PredictionTable {
     constructor(private predictionService: PredictionService,
-        private errorAlert: ErrorAlert) { }
+        private errorAlert: ErrorAlert) {
+        this.dataSource = new MatTableDataSource();
+    }
     private results: PredictionData[] = [];
     private requestData: PredictionRequestData;
 
     selectedId: number;
     userIds: number[];
-    dataSource: MatTableDataSource<PredictionData>;
+    dataSource: MatTableDataSource<PredictionResultData>;
+    displayedColumns: string[] = ['id', 'slot', 'score'];
     fromDate: Date;
     toDate: Date;
-    mindate: Date;
+    minDate: Date = new Date(2018, 2, 1);
     momentValidDate: Date;
     periodFixed: boolean = false;
     methods: any[] = [
@@ -36,13 +40,6 @@ export class PredictionTable implements OnInit {
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
-
-    ngOnInit() {
-        // March 1st, 2018
-        this.mindate = new Date(2018, 2, 1);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-    }
 
     getUsers() {
         this.predictionService.getUsers(this.fromDate, this.toDate)
@@ -63,19 +60,22 @@ export class PredictionTable implements OnInit {
     }
 
     selectUser(id) {
-        this.selectedId = id;
+        this.requestData.user = id;
     }
 
     resetPeriod() {
-        this.selectedId = null;
-        this.userIds = null;
-        this.dataSource = null;
+        this.requestData.user = null;
+        this.dataSource = new MatTableDataSource();
     }
 
     getPrediction() {
+        console.log('predict');
         this.predictionService.getPrediction(this.requestData)
             .subscribe(results => {
-
+                Array.prototype.push.apply(this.dataSource.data, results);
+                this.dataSource.data.slice();
+                this.dataSource.paginator = this.paginator;
+                this.dataSource.sort = this.sort;
             }, err => this.errorAlert.open(err));
     }
 }

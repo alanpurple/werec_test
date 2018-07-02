@@ -6,8 +6,7 @@ const esservice = require('../es-service');
 const csvparse = require('csv-parse');
 
 const PROTO_PATH = __dirname + '/../../../item_embed_rec/wprecservice.proto';
-
-const wprec_proto = grpc.load(PROTO_PATH).wprecservice;
+const wprec_proto = grpc.load(PROTO_PATH).WpRecService;
 
 const client = new wprec_proto.WpRecService('localhost:50051',
     grpc.credentials.createInsecure());
@@ -107,26 +106,34 @@ router.post('/user_profile', (req, res) => {
     let userIds = [];
     parser.on('readable', () => {
         while (record = parser.read()) {
-            userIds.push(record[0]);
+            if (userIds.length<30)
+                userIds.push(record[0]);
         }
-        res.send(userIds);
-        parser.end();
     });
     parser.on('error', err => {
         console.error(err);
         res.sendStatus(500);
         parser.end();
     });
+    parser.on('end', () => {
+        res.send(userIds);
+    })
     filestream.pipe(parser);
 });
 
 router.post('/predict', (req, res) => {
-    if (!req.body.methodName || !req.body.dayFrom || !req.body.dayTo || !req.body.predictMoment || !req.body.user) {
+    if (!req.body.methodName || !req.body.fromDate || !req.body.toDate || !req.body.predictMoment || !req.body.user) {
         res.sendStatus(401);
         return;
     }
-    const fromDate = new Date(req.body.dayFrom);
-    const toDate = new Date(req.body.dayTo);
+
+    let requestData = {
+        methodName: req.body.methodName,
+        user: parseInt(req.body.user)
+    };
+
+    const fromDate = new Date(req.body.fromDate);
+    const toDate = new Date(req.body.toDate);
     fromMonth = fromDate.getMonth() + 1;
     if (fromMonth < 10) fromMonth = '0' + fromMonth;
     fromDay = fromDate.getDate();
@@ -135,22 +142,23 @@ router.post('/predict', (req, res) => {
     if (toMonth < 10) toMonth = '0' + toMonth;
     toDay = toDate.getDate();
     if (toDay < 10) toDay = '0' + toDay;
-    req.body.dayFrom = fromMonth + '-' + fromDay;
-    req.body.dayTo = toMonth + '-' + toDay;
+    requestData.dayFrom = fromMonth + '-' + fromDay;
+    requestData.dayTo = toMonth + '-' + toDay;
 
     const pmDate = new Date(req.body.predictMoment);
     let pmMonth = pmDate.getMonth() + 1;
     if (pmMonth < 10) pmMonth = '0' + pmMonth;
     let pmDay = pmDate.getDate();
     if (pmDay < 10) pmDay = '0' + pmDay;
-    let pmHour = pmDate.getHours();
+    //let pmHour = pmDate.getHours();
+    let pmHour = 21;
     if (pmHour < 10) pmHour = '0' + pmHour;
-    req.body.predictMoment = pmDate.getFullYear() + '-' + pmMonth + '-' + pmDay + ' ' + pmHour;
-
-    client.getRecommend(req.body, (err, result) => {
+    requestData.predictMoment = pmDate.getFullYear() + '-' + pmMonth + '-' + pmDay + ' ' + pmHour;
+    client.getRecommend(requestData, (err, result) => {
         if (err || result.error > -1) {
             if (err)
                 console.error(err);
+            console.error(result.error);
             res.sendStatus(500);
         }
         res.send(result.result);

@@ -18,7 +18,7 @@ app.use(cookieParser());
 const rootPath = path.join(__dirname, '../wwwroot');
 app.use(express.static(rootPath));
 
-app.get(['/', '/prediction-results'],
+app.get(['/', '/prediction-results','/prediction-table'],
     (req, res) => res.sendFile(path.join(rootPath, 'index.html')));
 
 // prediction result for certain history
@@ -26,7 +26,7 @@ app.use('/results', require('./routes/results-route'));
 // training data, contains each users' history data
 app.use('/data', require('./routes/data-route'));
 // data import route
-app.use('/import', require('./routes/import-route'));
+//app.use('/import', require('./routes/import-route'));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -41,6 +41,7 @@ app.use(function (req, res, next) {
 // will print stacktrace
 if (app.get('env') === 'development') {
     app.use(function (err, req, res, next) {
+        console.error(err);
         res.status(err.status || 500);
         res.send(err.message);
     });
@@ -49,6 +50,7 @@ if (app.get('env') === 'development') {
 // production error handler
 // no stacktraces leaked to user
 app.use(function (err, req, res, next) {
+    console.error(err);
     res.status(err.status || 500);
     res.send(err.message);
 });

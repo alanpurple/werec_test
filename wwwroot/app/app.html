@@ -25,7 +25,8 @@
     <mat-sidenav #sidemenu [mode]="sidenavMode" [opened]="isOpened">
         <mat-list>
             <mat-list-item>
-                <button mat-icon-button routerLink="/" (click)="handleMenu(sidemenu)">
+                <button mat-icon-button routerLink="/"
+                        (click)="handleMenu(sidemenu)">
                     <mat-icon class="mat-24">home</mat-icon>
                 </button>
             </mat-list-item>
@@ -33,6 +34,12 @@
                 <button mat-button routerLink="/prediction-results"
                         (click)="handleMenu(sidemenu)">
                     테스트 결과 보기
+                </button>
+            </mat-list-item>
+            <mat-list-item>
+                <button mat-button routerLink="/prediction-table"
+                        (click)="handleMenu(sidemenu)">
+                    위픽 예측 결과 보기
                 </button>
             </mat-list-item>
         </mat-list>

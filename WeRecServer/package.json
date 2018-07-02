@@ -16,6 +16,7 @@
     "debug": "^3.1.0",
     "elasticsearch": "^15.0.0",
     "express": "^4.16.3",
+    "grpc": "^1.12.4",
     "mongoose": "^5.1.7",
     "morgan": "^1.9.0",
     "serve-favicon": "^2.5.0"

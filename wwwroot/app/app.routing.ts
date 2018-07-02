@@ -2,6 +2,7 @@
 
 import { Home } from './home';
 import { PredictionResults } from './prediction.results';
+import { PredictionTable } from './prediction.table';
 
 const appRoutes: Routes = [
     {
@@ -9,6 +10,9 @@ const appRoutes: Routes = [
     },
     {
         path: 'prediction-results', component: PredictionResults
+    },
+    {
+        path: 'prediction-table', component: PredictionTable
     }
 ];
 

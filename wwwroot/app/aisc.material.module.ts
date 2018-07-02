@@ -7,7 +7,8 @@ import {
     MatMenuModule, MatSelectModule, MatDatepickerModule,
     MatNativeDateModule, MatExpansionModule, MatTableModule,
     MatSlideToggleModule, MatSliderModule, MatProgressSpinnerModule,
-    MatTooltipModule, MatProgressBarModule, MatTreeModule
+    MatTooltipModule, MatProgressBarModule, MatTreeModule,
+    MatPaginatorModule, MatPaginator, MatSortModule
 } from '@angular/material';
 import { CdkTableModule } from '@angular/cdk/table';
 
@@ -21,7 +22,7 @@ import { CdkTableModule } from '@angular/cdk/table';
         MatNativeDateModule, MatExpansionModule, MatTableModule,
         CdkTableModule, MatSlideToggleModule, MatSliderModule,
         MatProgressSpinnerModule, MatTooltipModule, MatProgressBarModule,
-        MatTreeModule
+        MatTreeModule, MatPaginatorModule, MatSortModule
     ],
     exports: [
         MatButtonModule, MatCardModule, MatCheckboxModule,
@@ -32,7 +33,7 @@ import { CdkTableModule } from '@angular/cdk/table';
         MatNativeDateModule, MatExpansionModule, MatTableModule,
         CdkTableModule, MatSlideToggleModule, MatSliderModule,
         MatProgressSpinnerModule, MatTooltipModule, MatProgressBarModule,
-        MatTreeModule
+        MatTreeModule, MatPaginatorModule, MatSortModule
     ]
 })
 export class AIscMaterialModule { }

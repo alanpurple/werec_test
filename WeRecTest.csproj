@@ -21,6 +21,7 @@
     <Content Remove="wwwroot\app\import.request.data.ts" />
     <Content Remove="wwwroot\app\prediction.data.ts" />
     <Content Remove="wwwroot\app\prediction.request.data.ts" />
+    <Content Remove="wwwroot\app\prediction.result.data.ts" />
     <Content Remove="wwwroot\app\prediction.results.ts" />
     <Content Remove="wwwroot\app\prediction.service.ts" />
     <Content Remove="wwwroot\app\prediction.table.ts" />
@@ -50,6 +51,7 @@
     <TypeScriptCompile Include="wwwroot\app\deal.data.ts" />
     <TypeScriptCompile Include="wwwroot\app\prediction.data.ts" />
     <TypeScriptCompile Include="wwwroot\app\prediction.request.data.ts" />
+    <TypeScriptCompile Include="wwwroot\app\prediction.result.data.ts" />
     <TypeScriptCompile Include="wwwroot\app\prediction.results.ts" />
     <TypeScriptCompile Include="wwwroot\app\prediction.service.ts" />
     <TypeScriptCompile Include="wwwroot\app\prediction.table.ts" />
