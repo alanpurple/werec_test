@@ -8,7 +8,7 @@ import {
     MatNativeDateModule, MatExpansionModule, MatTableModule,
     MatSlideToggleModule, MatSliderModule, MatProgressSpinnerModule,
     MatTooltipModule, MatProgressBarModule, MatTreeModule,
-    MatPaginatorModule, MatPaginator, MatSortModule
+    MatPaginatorModule, MatSortModule
 } from '@angular/material';
 import { CdkTableModule } from '@angular/cdk/table';
 
