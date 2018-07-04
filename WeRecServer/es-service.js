@@ -9,7 +9,7 @@ pack = {};
 
 pack.getOne = id => {
     client.search({
-        index: 'ojm4',
+        index: 'ojm5',
         filterPath: ['hits.hits._source'],
         body: {
             'query': {
@@ -23,7 +23,7 @@ pack.getOne = id => {
 
 pack.getMany = ids => {
     client.search({
-        index: 'ojm4',
+        index: 'ojm5',
         filterPath: ['hits.hits._source'],
         body: {
             'query': {

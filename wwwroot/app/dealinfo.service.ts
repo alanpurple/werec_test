@@ -19,7 +19,7 @@ export class DealInfoService {
 
     getItem(id: number): Promise<SearchResponse<{}>> {
         return this.client.search({
-            index: 'ojm4',
+            index: 'ojm5',
             filterPath: ['hits.hits._source'],
             body: {
                 'query': {
