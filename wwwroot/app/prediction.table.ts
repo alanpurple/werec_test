@@ -1,5 +1,5 @@
 ﻿import { Component, ViewChild } from '@angular/core';
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
 import { PredictionData } from './prediction.data';
 import { PredictionRequestData } from './prediction.request.data';
@@ -37,7 +37,8 @@ export class PredictionTable {
         { name: 'Gradient Boosted Tree', method: 'gbc' },
         { name: 'Logistic Regression', method: 'logistic' },
         { name: 'Logistic Regression(tf)', method: 'logistic_tf' },
-        { name: 'Gradient Boosted Tree(tf)', method: 'boosted_tree_tf' }
+        { name: 'Gradient Boosted Tree(tf)', method: 'boosted_tree_tf' },
+        { name: 'RNN', method: 'rnn' }
     ];
 
     @ViewChild(MatPaginator) paginator: MatPaginator;

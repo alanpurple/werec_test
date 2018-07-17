@@ -3,7 +3,8 @@
 ################################################################################
 
 /.vs
-/obj
+obj/
+
 /Properties
 node_modules/
 lib/
@@ -12,3 +13,4 @@ lib/
 /package-lock.json
 wwwroot/app/*.js
 wwwroot/app/*.map
+/WeRecServer/bin
