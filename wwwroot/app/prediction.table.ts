@@ -38,7 +38,8 @@ export class PredictionTable {
         { name: 'Logistic Regression', method: 'logistic' },
         { name: 'Logistic Regression(tf)', method: 'logistic_tf' },
         { name: 'Gradient Boosted Tree(tf)', method: 'boosted_tree_tf' },
-        { name: 'RNN', method: 'rnn' }
+        { name: 'RNN', method: 'rnn' },
+        { name: 'Bidirectional RNN', method: 'rnn_bi' }
     ];
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
