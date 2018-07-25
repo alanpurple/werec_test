@@ -10,7 +10,7 @@ node_modules/
 lib/
 /Startup.cs
 /Program.cs
-/package-lock.json
+package-lock.json
 wwwroot/app/*.js
 wwwroot/app/*.map
 /WeRecServer/bin
