@@ -39,7 +39,8 @@ export class PredictionTable {
         { name: 'Logistic Regression(tf)', method: 'logistic_tf' },
         { name: 'Gradient Boosted Tree(tf)', method: 'boosted_tree_tf' },
         { name: 'RNN', method: 'rnn' },
-        { name: 'Bidirectional RNN', method: 'rnn_bi' }
+        { name: 'Bidirectional RNN', method: 'rnn_bi' },
+        { name: 'Weighted ALS', method: 'wals' }
     ];
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -56,7 +57,11 @@ export class PredictionTable {
                     toDate: this.toDate,
                     predictMoment: this.momentValidDate,
                     user: this.userIds[0],
-                    methodName: this.methods[0].method
+                    methodName: this.methods[0].method,
+                    // default values for wals, unnecessary for other methods
+                    dimension:30,
+                    weight: 0.5,
+                    coef:2.0
                 };
                 this.periodFixed = true;
             },

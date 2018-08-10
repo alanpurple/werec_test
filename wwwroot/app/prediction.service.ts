@@ -16,4 +16,7 @@ export class PredictionService {
     getPrediction(data: PredictionRequestData): Observable<PredictionResultData[]> {
         return this.http.post<PredictionResultData[]>('/results/predict', data);
     }
+    getMfPrediction(data: PredictionRequestData): Observable<PredictionResultData[]> {
+        return this.http.post<PredictionResultData[]>('/results/predict', data);
+    }
 }

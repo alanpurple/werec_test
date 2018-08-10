@@ -126,10 +126,11 @@ router.post('/predict', (req, res) => {
         res.sendStatus(401);
         return;
     }
+    const user = parseInt(req.body.user)
 
     let requestData = {
         methodName: req.body.methodName,
-        user: parseInt(req.body.user)
+        user: user
     };
 
     const fromDate = new Date(req.body.fromDate);
@@ -145,6 +146,12 @@ router.post('/predict', (req, res) => {
     requestData.dayFrom = fromMonth + '-' + fromDay;
     requestData.dayTo = toMonth + '-' + toDay;
 
+    if (req.body.methodName == 'wals') {
+        requestData.dimension = req.body.dimension;
+        requestData.weight = req.body.weight;
+        requestData.coef = req.body.coef;
+    }
+
     const pmDate = new Date(req.body.predictMoment);
     let pmMonth = pmDate.getMonth() + 1;
     if (pmMonth < 10) pmMonth = '0' + pmMonth;
@@ -154,15 +161,31 @@ router.post('/predict', (req, res) => {
     let pmHour = 21;
     if (pmHour < 10) pmHour = '0' + pmHour;
     requestData.predictMoment = pmDate.getFullYear() + '-' + pmMonth + '-' + pmDay + ' ' + pmHour;
-    client.getRecommend(requestData, (err, result) => {
-        if (err || result.error > -1) {
-            if (err)
-                console.error(err);
-            console.error(result.error);
-            res.sendStatus(500);
-        }
-        res.send(result.result);
-    });
+
+    if (req.body.methodName == 'wals') {
+        delete requestData.methodName;
+        client.getMfRecommend(requestData, (err, result) => {
+            if (err || result.error > -1) {
+                if (err)
+                    console.error(err);
+                console.error(result.error);
+                res.sendStatus(500);
+                return;
+            }
+            res.send(result.result);
+        });
+    }
+    else
+        client.getRecommend(requestData, (err, result) => {
+            if (err || result.error > -1) {
+                if (err)
+                    console.error(err);
+                console.error(result.error);
+                res.sendStatus(500);
+                return;
+            }
+            res.send(result.result);
+        });;
 });
 
 module.exports = router;

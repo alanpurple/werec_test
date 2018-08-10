@@ -38,6 +38,15 @@
         <mat-datepicker-toggle matSuffix [for]="momentPicker"></mat-datepicker-toggle>
         <mat-datepicker #momentPicker startView="month" [startAt]="momentValidDate"></mat-datepicker>
     </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Dimension" type="number" min="20" max="300" step="5" [(ngModel)]="requestData.dimension" name="dimension" />
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Unobserved weight" type="number" min="0.02" max="0.80" step="0.01" [(ngModel)]="requestData.weight" name="weight" /> 
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Regularization coefficient" type="number" min="0.1" max="10.0" step="0.1" [(ngModel)]="requestData.coef" name="coefficient" />
+    </mat-form-field>
     <div fxLayout="row">
         <button mat-button color="primary" type="submit">Prediction 결과 보기</button>
         <button mat-button color="accent" type="reset">다시 입력</button>
