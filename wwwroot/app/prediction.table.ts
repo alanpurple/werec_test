@@ -74,7 +74,7 @@ export class PredictionTable {
 
     resetPeriod() {
         this.requestData.user = null;
-        this.dataSource = new MatTableDataSource();
+        this.dataSource.data = [];
     }
 
     getPrediction() {
