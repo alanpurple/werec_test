@@ -5,6 +5,9 @@ const grpc = require('grpc');
 const esservice = require('../es-service');
 const csvparse = require('csv-parse');
 
+const PosData = require('../models/PosData');
+const EsService = require('../es-service');
+
 const PROTO_PATH = __dirname + '/../../../item_embed_rec/wprecservice.proto';
 const wprec_proto = grpc.load(PROTO_PATH).WpRecService;
 
@@ -119,6 +122,30 @@ router.post('/user_profile', (req, res) => {
         res.send(userIds);
     })
     filestream.pipe(parser);
+});
+
+router.get('/hist/:id', (req, res) => {
+    PosData.find({ UserId: req.params.id, WepickRank: { $gte: 20 } })
+        .then(data => {
+            if (!data) {
+                res.sendStatus(404);
+                return;
+            }
+            const history = data.map(elem => elem.DealId);
+            EsService.getMany(history)
+                .then(body => {
+                    const response = body.hits.hits;
+                    if (!response) {
+                        res.sendStatus(404);
+                        return;
+                    }
+                    const titles = response.map(elem => elem._source['_2']);
+                    res.send(titles);
+                })
+        }).catch(err => {
+            console.error(err);
+            res.sendStatus(500);
+        });
 });
 
 router.post('/predict', (req, res) => {

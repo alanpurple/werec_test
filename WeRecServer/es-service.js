@@ -7,7 +7,7 @@ const client = new elastic.Client({
 
 pack = {};
 
-pack.getOne = id => {
+pack.getOne = id =>
     client.search({
         index: 'ojm5',
         filterPath: ['hits.hits._source'],
@@ -18,10 +18,9 @@ pack.getOne = id => {
                 }
             }
         }
-    })
-};
+    });
 
-pack.getMany = ids => {
+pack.getMany = ids =>
     client.search({
         index: 'ojm5',
         filterPath: ['hits.hits._source'],
@@ -32,7 +31,6 @@ pack.getMany = ids => {
                 }
             }
         }
-    })
-};
+    });
 
 module.exports = pack;

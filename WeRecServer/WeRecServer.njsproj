@@ -38,9 +38,12 @@
     <Compile Include="es-service.js">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="models\DealW2v.js" />
     <Compile Include="models\History.js">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="models\PosData.js" />
+    <Compile Include="models\WepickDeal.js" />
     <Compile Include="models_praha\DealInfo.js">
       <SubType>Code</SubType>
     </Compile>

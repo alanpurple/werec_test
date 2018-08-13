@@ -53,6 +53,9 @@
     </div>
 </form>
 
+<button mat-button *ngIf="requestData.user" (click)="getUserHistory()">유저 히스토리 불러오기</button>
+
+
 <button *ngIf="periodFixed" mat-raised-button color="warn" (click)="resetPeriod()">처음부터 다시 선택</button>
 
 <div class="mat-elavation-z8">
