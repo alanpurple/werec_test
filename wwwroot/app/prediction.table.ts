@@ -78,7 +78,7 @@ export class PredictionTable {
     }
 
     getPrediction() {
-        this.dataSource = new MatTableDataSource();
+        this.dataSource.data = [];
         this.predictionService.getPrediction(this.requestData)
             .subscribe(results => {
                 Array.prototype.push.apply(this.dataSource.data, results);
