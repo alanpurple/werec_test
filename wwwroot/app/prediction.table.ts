@@ -33,7 +33,7 @@ export class PredictionTable {
     periodFixed: boolean = false;
     methods: any[] = [
         { name: 'DNN using Tensorflow', method: 'dnn_tf' },
-        { name: 'DIN model from Alibaba', method: 'alibaba_din' },
+        { name: 'DIN model by Alibaba', method: 'alibaba_din' },
         { name: 'Gradient Boosted Tree', method: 'gbc' },
         { name: 'Logistic Regression', method: 'logistic' },
         { name: 'Logistic Regression(tf)', method: 'logistic_tf' },
