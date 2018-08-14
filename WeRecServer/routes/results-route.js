@@ -128,11 +128,10 @@ router.get('/hist/:id', (req, res) => {
     PosData.find({ UserId: req.params.id, WepickRank: { $gte: 20 } })
         .then(data => {
             if (!data) {
-                res.sendStatus(404);
-                return;
+                return res.sendStatus(404);
             }
             const history = data.map(elem => elem.DealId);
-            EsService.getMany(history)
+            return EsService.getMany(history)
                 .then(body => {
                     const response = body.hits.hits;
                     if (!response) {
@@ -177,6 +176,7 @@ router.post('/predict', (req, res) => {
         requestData.dimension = req.body.dimension;
         requestData.weight = req.body.weight;
         requestData.coef = req.body.coef;
+        requestData.nIter = req.body.nIter;
     }
 
     const pmDate = new Date(req.body.predictMoment);

@@ -26,6 +26,10 @@ export class PredictionTable {
     userIds: number[];
     dataSource: MatTableDataSource<{}>;
     displayedColumns: string[] = ['id', 'slot', 'title', 'score', 'url'];
+    isProcessing: boolean = false;
+    isRetrievingUsers: boolean = false;
+    isRetrievingHistory: boolean = false;
+    userHistory: string[] = [];
     fromDate: Date;
     toDate: Date;
     minDate: Date = new Date(2018, 2, 1);
@@ -47,8 +51,10 @@ export class PredictionTable {
     @ViewChild(MatSort) sort: MatSort;
 
     getUsers() {
+        this.isRetrievingUsers = true;
         this.predictionService.getUsers(this.fromDate, this.toDate)
             .subscribe(ids => {
+                this.isRetrievingUsers = false;
                 this.userIds = ids;
                 this.momentValidDate = new Date(this.toDate.getFullYear(),
                     this.toDate.getMonth(), this.toDate.getDate() + 1);
@@ -59,9 +65,10 @@ export class PredictionTable {
                     user: this.userIds[0],
                     methodName: this.methods[0].method,
                     // default values for wals, unnecessary for other methods
-                    dimension:30,
+                    dimension: 30,
                     weight: 0.5,
-                    coef:2.0
+                    coef: 2.0,
+                    nIter: 30
                 };
                 this.periodFixed = true;
             },
@@ -72,15 +79,28 @@ export class PredictionTable {
         this.requestData.user = id;
     }
 
+    getUserHistory() {
+        this.isRetrievingHistory = true;
+        this.predictionService.getUserHistory(this.requestData.user)
+            .subscribe(data => {
+                this.isRetrievingHistory = false;
+                this.userHistory = data;
+            },
+                err => this.errorAlert.open(err));
+    }
+
     resetPeriod() {
         this.requestData.user = null;
+        this.userHistory = [];
         this.dataSource.data = [];
     }
 
     getPrediction() {
+        this.isProcessing = true;
         this.dataSource.data = [];
         this.predictionService.getPrediction(this.requestData)
             .subscribe(results => {
+                this.isProcessing = false;
                 Array.prototype.push.apply(this.dataSource.data, results);
                 this.dataSource.data.slice();
                 this.dataSource.paginator = this.paginator;

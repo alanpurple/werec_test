@@ -8,4 +8,5 @@
     dimension: number;
     weight: number;
     coef: number;
+    nIter: number;
 }

@@ -20,6 +20,6 @@ export class PredictionService {
         return this.http.post<PredictionResultData[]>('/results/predict', data);
     }
     getUserHistory(id: number): Observable<string[]> {
-        return this.http.get<string[]>('/results/hist' + id);
+        return this.http.get<string[]>('/results/hist/' + id);
     }
 }

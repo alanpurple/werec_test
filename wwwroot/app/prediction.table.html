@@ -11,7 +11,7 @@
     </mat-form-field>
     <button mat-button color="primary" type="submit">유저 id 리스트 불러오기</button>
 </form>
-
+<mat-progress-bar mode="indeterminate" *ngIf="isRetrievingUsers"></mat-progress-bar>
 <mat-grid-list cols="10" rowHeight="2:1">
     <mat-grid-tile *ngFor="let id of userIds">
         <button mat-button color="primary" (click)="selectUser(id)">
@@ -47,17 +47,24 @@
     <mat-form-field>
         <input matInput placeholder="Regularization coefficient" type="number" min="0.1" max="10.0" step="0.1" [(ngModel)]="requestData.coef" name="coefficient" />
     </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Number of Iteration" type="number" min="5" max="100" step="1" [(ngModel)]="requestData.nIter" name="number of Iteration" />
+    </mat-form-field>
     <div fxLayout="row">
         <button mat-button color="primary" type="submit">Prediction 결과 보기</button>
         <button mat-button color="accent" type="reset">다시 입력</button>
     </div>
 </form>
 
-<button mat-button *ngIf="requestData.user" (click)="getUserHistory()">유저 히스토리 불러오기</button>
+<button mat-button *ngIf="requestData?.user" (click)="getUserHistory()">유저 히스토리 불러오기</button>
+<mat-spinner *ngIf="isRetrievingHistory"></mat-spinner>
+<mat-chip-list>
+    <mat-chip *ngFor="let item of userHistory" color="primary"[removable]="true">{{item}}</mat-chip>
+</mat-chip-list>
 
 
 <button *ngIf="periodFixed" mat-raised-button color="warn" (click)="resetPeriod()">처음부터 다시 선택</button>
-
+<mat-spinner *ngIf="isProcessing"></mat-spinner>
 <div class="mat-elavation-z8">
     <table mat-table [dataSource]="dataSource" matSort style="width:100%">
         <ng-container matColumnDef="id">
