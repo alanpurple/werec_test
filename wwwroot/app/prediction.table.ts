@@ -89,6 +89,10 @@ export class PredictionTable {
                 err => this.errorAlert.open(err));
     }
 
+    removeHist(id) {
+        this.userHistory.splice(id, 1);
+    }
+
     resetPeriod() {
         this.requestData.user = null;
         this.userHistory = [];

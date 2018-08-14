@@ -59,7 +59,10 @@
 <button mat-button *ngIf="requestData?.user" (click)="getUserHistory()">유저 히스토리 불러오기</button>
 <mat-spinner *ngIf="isRetrievingHistory"></mat-spinner>
 <mat-chip-list>
-    <mat-chip *ngFor="let item of userHistory" color="primary"[removable]="true">{{item}}</mat-chip>
+    <mat-chip *ngFor="let item of userHistory;let i=index" color="primary" [removable]="true" (removed)="removeHist(i)">
+        {{item}}
+        <mat-icon matChipRemove>cancel</mat-icon>
+    </mat-chip>
 </mat-chip-list>
 
 
