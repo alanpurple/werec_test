@@ -22,6 +22,8 @@ pack.getOne = id =>
 
 pack.getMany = ids =>
     client.search({
+        from: 0,
+        size:ids.length,
         index: 'ojm5',
         filterPath: ['hits.hits._source'],
         body: {
