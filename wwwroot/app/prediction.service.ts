@@ -1,11 +1,10 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import { ErrorAlert } from './error.alert';
 
 import { PredictionRequestData } from './prediction.request.data';
 import { PredictionResultData } from './prediction.result.data';
+import { UserHistoryData } from './user.history.data';
 
 @Injectable()
 export class PredictionService {
@@ -19,7 +18,7 @@ export class PredictionService {
     getMfPrediction(data: PredictionRequestData): Observable<PredictionResultData[]> {
         return this.http.post<PredictionResultData[]>('/results/predict', data);
     }
-    getUserHistory(id: number): Observable<string[]> {
-        return this.http.get<string[]>('/results/hist/' + id);
+    getUserHistory(id: number, slot: number, limit: number): Observable<UserHistoryData[]> {
+        return this.http.get<UserHistoryData[]>('/results/hist/' + id + '/slot/' + slot + '/limit/' + limit);
     }
 }

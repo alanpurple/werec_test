@@ -6,7 +6,6 @@ import { PredictionRequestData } from './prediction.request.data';
 import { PredictionService } from './prediction.service';
 import { DealInfoService } from './dealinfo.service';
 import { ErrorAlert } from './error.alert';
-import { Data } from '@angular/router';
 
 @Component({
     moduleId: module.id,
@@ -28,8 +27,6 @@ export class PredictionTable {
     displayedColumns: string[] = ['id', 'slot', 'title', 'score', 'url'];
     isProcessing: boolean = false;
     isRetrievingUsers: boolean = false;
-    isRetrievingHistory: boolean = false;
-    userHistory: string[] = [];
     fromDate: Date;
     toDate: Date;
     minDate: Date = new Date(2018, 2, 1);
@@ -79,23 +76,8 @@ export class PredictionTable {
         this.requestData.user = id;
     }
 
-    getUserHistory() {
-        this.isRetrievingHistory = true;
-        this.predictionService.getUserHistory(this.requestData.user)
-            .subscribe(data => {
-                this.isRetrievingHistory = false;
-                this.userHistory = data;
-            },
-                err => this.errorAlert.open(err));
-    }
-
-    removeHist(id) {
-        this.userHistory.splice(id, 1);
-    }
-
     resetPeriod() {
         this.requestData.user = null;
-        this.userHistory = [];
         this.dataSource.data = [];
     }
 

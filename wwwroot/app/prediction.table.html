@@ -22,7 +22,7 @@
 
 <form *ngIf="periodFixed" (ngSubmit)="getPrediction()" fxLayout="column">
     <mat-form-field>
-        <input matInput name="userId" type="number" 
+        <input matInput name="userId" type="number"
                [(ngModel)]="requestData.user" placeholder="유저id" required />
     </mat-form-field>
     <mat-form-field>
@@ -34,7 +34,7 @@
     </mat-form-field>
     <mat-form-field>
         <input matInput [matDatepicker]="momentPicker" placeholder="예측 날짜" name="moment"
-               [(ngModel)]="requestData.predictMoment"/>
+               [(ngModel)]="requestData.predictMoment" />
         <mat-datepicker-toggle matSuffix [for]="momentPicker"></mat-datepicker-toggle>
         <mat-datepicker #momentPicker startView="month" [startAt]="momentValidDate"></mat-datepicker>
     </mat-form-field>
@@ -42,7 +42,7 @@
         <input matInput placeholder="Dimension" type="number" min="20" max="300" step="5" [(ngModel)]="requestData.dimension" name="dimension" />
     </mat-form-field>
     <mat-form-field>
-        <input matInput placeholder="Unobserved weight" type="number" min="0.02" max="0.80" step="0.01" [(ngModel)]="requestData.weight" name="weight" /> 
+        <input matInput placeholder="Unobserved weight" type="number" min="0.02" max="0.80" step="0.01" [(ngModel)]="requestData.weight" name="weight" />
     </mat-form-field>
     <mat-form-field>
         <input matInput placeholder="Regularization coefficient" type="number" min="0.1" max="10.0" step="0.1" [(ngModel)]="requestData.coef" name="coefficient" />
@@ -56,44 +56,32 @@
     </div>
 </form>
 
-<button mat-button *ngIf="requestData?.user" (click)="getUserHistory()">유저 히스토리 불러오기</button>
-<mat-spinner *ngIf="isRetrievingHistory"></mat-spinner>
-<mat-chip-list>
-    <mat-chip *ngFor="let item of userHistory;let i=index" color="primary" [removable]="true" (removed)="removeHist(i)">
-        {{item}}
-        <mat-icon matChipRemove>cancel</mat-icon>
-    </mat-chip>
-</mat-chip-list>
-
-
 <button *ngIf="periodFixed" mat-button color="primary" (click)="resetPeriod()">처음부터 다시 선택</button>
 <mat-spinner *ngIf="isProcessing"></mat-spinner>
-<div class="mat-elavation-z8">
-    <table mat-table [dataSource]="dataSource" matSort style="width:100%">
-        <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef>id</th>
-            <td mat-cell *matCellDef="let row">{{row.id}}</td>
-        </ng-container>
-        <ng-container matColumnDef="title">
-            <th mat-header-cell *matHeaderCellDef>타이틀</th>
-            <td mat-cell *matCellDef="let row">{{row.title}}</td>
-        </ng-container>
-        <ng-container matColumnDef="slot">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>slot</th>
-            <td mat-cell *matCellDef="let row">{{row.slot}}</td>
-        </ng-container>
-        <ng-container matColumnDef="score">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>score</th>
-            <td mat-cell *matCellDef="let row">{{row.score}}</td>
-        </ng-container>
-        <ng-container matColumnDef="url">
-            <th mat-header-cell *matHeaderCellDef>이미지url</th>
-            <td mat-cell *matCellDef="let row">{{row.url}}</td>
-        </ng-container>
+<table mat-table [dataSource]="dataSource" class="mat-elavation-z8" matSort style="width:100%">
+    <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>id</th>
+        <td mat-cell *matCellDef="let row">{{row.id}}</td>
+    </ng-container>
+    <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef>타이틀</th>
+        <td mat-cell *matCellDef="let row">{{row.title}}</td>
+    </ng-container>
+    <ng-container matColumnDef="slot">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>slot</th>
+        <td mat-cell *matCellDef="let row">{{row.slot}}</td>
+    </ng-container>
+    <ng-container matColumnDef="score">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>score</th>
+        <td mat-cell *matCellDef="let row">{{row.score}}</td>
+    </ng-container>
+    <ng-container matColumnDef="url">
+        <th mat-header-cell *matHeaderCellDef>이미지url</th>
+        <td mat-cell *matCellDef="let row">{{row.url}}</td>
+    </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-</div>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
 
 <mat-paginator [pageSizeOptions]="[5,10,20,30]"></mat-paginator>

@@ -38,6 +38,8 @@
     <Compile Include="es-service.js">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="models\Category1.js" />
+    <Compile Include="models\Category2.js" />
     <Compile Include="models\DealW2v.js" />
     <Compile Include="models\History.js">
       <SubType>Code</SubType>
@@ -63,6 +65,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="set-mongoose.js" />
+    <Content Include="favicon.ico" />
     <Content Include="package.json" />
     <Content Include="README.md" />
   </ItemGroup>

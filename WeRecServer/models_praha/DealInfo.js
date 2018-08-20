@@ -2,28 +2,18 @@
 const Schema = mongoose.Schema;
 
 const DealInfoSchema = new Schema({
-    _id: Number,
-    _class: String,
-    did: Schema.Types.ObjectId,
-    dgid: Number,
-    sst: Date,
-    set: Date,
-    pe: Number,
-    po: Number,
-    pot: Number,
-    ps: Number,
-    st: Number,
-    ef: Number,
-    lttd: String,
-    lgtd: String,
-    ci: String,
+    _id: String,
     mn: String,
-    ls: String,
-    sn: String,
-    on: String,
-    dc: String,
-    t: Object
+    did: Number,
+    t: {
+        type: {
+            tn1: String,
+            ti1: Number,
+            tn2: String,
+            ti2: Number
+        }
+    }
 });
 
 module.exports = require('../connection-praha')
-    .model('DealInfoSchema', DealInfoSchema);
+    .model('DealInfo', DealInfoSchema);

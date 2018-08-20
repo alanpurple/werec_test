@@ -42,6 +42,12 @@
                     위픽 예측 결과 보기
                 </button>
             </mat-list-item>
+            <mat-list-item>
+                <button mat-button routerLink="/history-viewer"
+                        (click)="handleMenu(sidemenu)">
+                    유저 히스토리 보기
+                </button>
+            </mat-list-item>
         </mat-list>
     </mat-sidenav>
     <router-outlet></router-outlet>

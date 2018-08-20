@@ -14,6 +14,7 @@ import { AppRouting } from './app.routing';
 import { Home } from './home';
 import { PredictionResults } from './prediction.results';
 import { PredictionTable } from './prediction.table';
+import { HistoryViewer } from './history-viewer';
 import { ErrorDialog, ErrorAlert } from './error.alert';
 import { ConfirmDialog, ConfirmDialogTemplate } from './confirm.dialog';
 import { DealInfoService } from './dealinfo.service';
@@ -29,7 +30,7 @@ import { PredictionService } from './prediction.service';
     ],
     declarations: [
         App, Home, ErrorDialog, ConfirmDialogTemplate, PredictionResults,
-        PredictionTable
+        PredictionTable, HistoryViewer
     ],
     providers: [
         ErrorAlert, ConfirmDialog, DealInfoService, PredictionService

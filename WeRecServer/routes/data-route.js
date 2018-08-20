@@ -1,6 +1,5 @@
 ﻿const router = require('express').Router();
 const fs = require('fs');
-const esservice = require('../es-service');
 
 // expect json files
 router.get('/', (req, res) => {

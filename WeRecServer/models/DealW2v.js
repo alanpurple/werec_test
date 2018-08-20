@@ -7,9 +7,12 @@ const DealW2vSchema = new Schema({
     vectorizedWords: {
         type: [Number],
         validate: {
-            validator: v => len(v) == 100
+            validator: v => v.length == 100
         }
-    }
+    },
+    title: String,
+    category1: { type: Number, ref: 'Category1' },
+    category2: { type: Number, ref: 'Category2' }
 }, { collection: 'dealw2v' });
 
 module.exports = require('../connection').model('DealW2v', DealW2vSchema);

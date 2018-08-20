@@ -3,6 +3,7 @@
 import { Home } from './home';
 import { PredictionResults } from './prediction.results';
 import { PredictionTable } from './prediction.table';
+import { HistoryViewer } from './history-viewer';
 
 const appRoutes: Routes = [
     {
@@ -13,6 +14,9 @@ const appRoutes: Routes = [
     },
     {
         path: 'prediction-table', component: PredictionTable
+    },
+    {
+        path: 'history-viewer', component: HistoryViewer
     }
 ];
 

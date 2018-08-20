@@ -6,7 +6,8 @@ const esservice = require('../es-service');
 const csvparse = require('csv-parse');
 
 const PosData = require('../models/PosData');
-const EsService = require('../es-service');
+const Deal = require('../models/DealW2v');
+const Category2 = require('../models/Category2');
 
 const PROTO_PATH = __dirname + '/../../../item_embed_rec/wprecservice.proto';
 const wprec_proto = grpc.load(PROTO_PATH).WpRecService;
@@ -81,11 +82,11 @@ router.get('/:name', (req, res) => {
                         }, err => {
                             console.error(err);
                             res.sendStatus(500);
-                        })
+                        });
                     }
-                }))
+                }));
         }
-    })
+    });
 });
 
 router.post('/user_profile', (req, res) => {
@@ -120,27 +121,33 @@ router.post('/user_profile', (req, res) => {
     });
     parser.on('end', () => {
         res.send(userIds);
-    })
+    });
     filestream.pipe(parser);
 });
 
-router.get('/hist/:id', (req, res) => {
-    PosData.find({ UserId: req.params.id, WepickRank: { $gte: 20 } })
+router.get('/hist/:id/slot/:slot/limit/:limit', (req, res) => {
+    PosData.find({ UserId: req.params.id, WepickRank: { $gte: req.params.slot }, TransDate: { $lte: '2018-04-11 20' } })
+        .sort({ TransDate: -1 })
+        .limit(parseInt(req.params.limit))
+        // bad naming, I know
+        .populate({
+            path: 'DealId',
+            populate: {path:'category2'}
+        })
         .then(data => {
             if (!data) {
                 return res.sendStatus(404);
             }
-            const history = data.map(elem => elem.DealId);
-            return EsService.getMany(history)
-                .then(body => {
-                    const response = body.hits.hits;
-                    if (!response) {
-                        res.sendStatus(404);
-                        return;
-                    }
-                    const titles = response.map(elem => elem._source['_2']);
-                    res.send(titles);
-                })
+            const serviceData = data.map(elem => {
+                return {
+                    id: elem.DealId._id,
+                    slot: elem.WepickRank,
+                    date: elem.TransDate,
+                    title: elem.DealId.title,
+                    category: elem.DealId.category2.name
+                };
+            });
+            res.send(serviceData);
         }).catch(err => {
             console.error(err);
             res.sendStatus(500);
@@ -152,7 +159,7 @@ router.post('/predict', (req, res) => {
         res.sendStatus(401);
         return;
     }
-    const user = parseInt(req.body.user)
+    const user = parseInt(req.body.user);
 
     let requestData = {
         methodName: req.body.methodName,
@@ -212,7 +219,7 @@ router.post('/predict', (req, res) => {
                 return;
             }
             res.send(result.result);
-        });;
+        });
 });
 
 module.exports = router;
