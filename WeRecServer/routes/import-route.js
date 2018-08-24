@@ -31,7 +31,7 @@ router.post('/hist', (req, res) => {
             });
             let result = new History({
 
-            })
+            });
             return History.create(historyGroup).then(
                 () => res.send('Import success with' + LIMIT + ' member histories'));
         }).catch(err => {

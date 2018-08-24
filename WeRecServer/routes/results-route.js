@@ -8,6 +8,7 @@ const csvparse = require('csv-parse');
 const PosData = require('../models/PosData');
 const Deal = require('../models/DealW2v');
 const Category2 = require('../models/Category2');
+const WepickDeal = require('../models/WepickDeal');
 
 const PROTO_PATH = __dirname + '/../../../item_embed_rec/wprecservice.proto';
 const wprec_proto = grpc.load(PROTO_PATH).WpRecService;
@@ -109,9 +110,11 @@ router.post('/user_profile', (req, res) => {
     const parser = csvparse();
     let userIds = [];
     parser.on('readable', () => {
-        while (record = parser.read()) {
+        let record = parser.read();
+        while (record) {
             if (userIds.length<30)
                 userIds.push(record[0]);
+            record = parser.read();
         }
     });
     parser.on('error', err => {
@@ -123,6 +126,70 @@ router.post('/user_profile', (req, res) => {
         res.send(userIds);
     });
     filestream.pipe(parser);
+});
+
+router.get('/user_index/:fromDate/:toDate/:id', (req, res) => {
+    if (!req.params.fromDate || !req.params.toDate || !req.params.id)
+        return res.sendStatus(401);
+    fs.exists('../dict/user_' + req.params.fromDate + '_to_' + req.params.toDate + '_cate.json', exists => {
+        if (!exists)
+            return res.sendStatus(404);
+        fs.open('user_' + req.params.fromDate + '_to_' + req.params.toDate + '_cate.json', (err, fd) => {
+            if (err) {
+                console.error(err);
+                return res.sendStatus(500);
+            }
+            const UserDict = JSON.parse(fd);
+            const userIndex = UserDict.indexOf(req.params.id);
+            if (userIndex < 0)
+                res.sendStatus(404);
+            else
+                res.send({ id: userIndex });
+        });
+    });
+});
+
+router.get('/wepick/:time/:slot', (req, res) => {
+    WepickDeal.find({
+        _id: {
+            $gte: req.params.time
+                + ' ' + req.params.slot, $lte: req.params.time + ' 99'
+        }
+    }).populate({
+        path: 'deal',
+        populate: { path: 'category2' }
+    }).then(deals => {
+        if (!deals)
+            return res.sendStatus(404);
+        const result = deals.map(elem => {
+            return {
+                id: elem.deal._id,
+                slot: elem._id.slice(-2),
+                date: elem._id.slice(0, elem._id.length - 3),
+                title: elem.deal.title,
+                category: elem.deal.category2.title,
+                categoryId: elem.deal.category2._id
+            };
+        });
+        res.send(result);
+    }).catch(err => {
+        console.error(err);
+        res.sendStatus(500);
+    });
+});
+
+router.get('/category_dict', (req, res) => {
+    fs.exists('../dict/cate_dict.json', exists => {
+        if (!exists)
+            return res.sendStatus(404);
+        fs.open('../dict/cate_dict.json', (err, fd) => {
+            if (err) {
+                console.error(err);
+                return res.sendStatus(500);
+            }
+            res.send(JSON.parse(fd));
+        });
+    });
 });
 
 router.get('/hist/:id/slot/:slot/limit/:limit', (req, res) => {
@@ -144,7 +211,8 @@ router.get('/hist/:id/slot/:slot/limit/:limit', (req, res) => {
                     slot: elem.WepickRank,
                     date: elem.TransDate,
                     title: elem.DealId.title,
-                    category: elem.DealId.category2.name
+                    category: elem.DealId.category2.name,
+                    categoryId: elem.DealId.category2._id
                 };
             });
             res.send(serviceData);

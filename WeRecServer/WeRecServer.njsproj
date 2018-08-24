@@ -65,6 +65,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="set-mongoose.js" />
+    <Content Include="dict\cate_dict.json" />
+    <Content Include="dict\user_03-11_04-10_for_cate.json" />
     <Content Include="favicon.ico" />
     <Content Include="package.json" />
     <Content Include="README.md" />
@@ -73,6 +75,7 @@
     <Folder Include="data\" />
     <Folder Include="models_praha\" />
     <Folder Include="models\" />
+    <Folder Include="dict\" />
     <Folder Include="routes\" />
     <Folder Include="results\" />
   </ItemGroup>

@@ -4,4 +4,5 @@
     date: string,
     slot: number,
     category: string
+    categoryId: number
 }
