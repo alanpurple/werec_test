@@ -4,6 +4,7 @@ import { Home } from './home';
 import { PredictionResults } from './prediction.results';
 import { PredictionTable } from './prediction.table';
 import { HistoryViewer } from './history-viewer';
+import { WalsSimulator } from './wals-simulator';
 
 const appRoutes: Routes = [
     {
@@ -17,6 +18,9 @@ const appRoutes: Routes = [
     },
     {
         path: 'history-viewer', component: HistoryViewer
+    },
+    {
+        path: 'wals-simulator', component: WalsSimulator
     }
 ];
 

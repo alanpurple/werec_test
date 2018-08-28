@@ -76,6 +76,7 @@
     <Folder Include="models_praha\" />
     <Folder Include="models\" />
     <Folder Include="dict\" />
+    <Folder Include="temp\" />
     <Folder Include="routes\" />
     <Folder Include="results\" />
   </ItemGroup>

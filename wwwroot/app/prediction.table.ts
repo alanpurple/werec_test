@@ -24,7 +24,7 @@ export class PredictionTable {
     selectedId: number;
     userIds: number[];
     dataSource: MatTableDataSource<{}>;
-    displayedColumns: string[] = ['id', 'slot', 'title', 'score', 'url'];
+    displayedColumns: string[] = ['id', 'slot', 'title', 'score'];
     isProcessing: boolean = false;
     isRetrievingUsers: boolean = false;
     fromDate: Date;

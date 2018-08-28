@@ -4,6 +4,7 @@ const fs = require('fs');
 const grpc = require('grpc');
 const esservice = require('../es-service');
 const csvparse = require('csv-parse');
+const path = require('path');
 
 const PosData = require('../models/PosData');
 const Deal = require('../models/DealW2v');
@@ -39,6 +40,27 @@ router.get('/single/:id', (req, res) => {
     }, err => {
         console.error(err);
         res.sendStatus(500);
+    });
+});
+
+router.get('/category_dict', (req, res) => {
+    fs.stat(path.join(__dirname,'../dict/cate_dict.json'), err => {
+        if (err) {
+            if (err.code === 'ENOENT')
+                return res.sendStatus(404);
+            else {
+                console.error(err);
+                return res.sendStatus(500);
+            }
+        }
+
+        fs.readFile(path.join(__dirname, '../dict/cate_dict.json'), (err, data) => {
+            if (err) {
+                console.error(err);
+                return res.sendStatus(500);
+            }
+            res.send(JSON.parse(data));
+        });
     });
 });
 
@@ -112,7 +134,7 @@ router.post('/user_profile', (req, res) => {
     parser.on('readable', () => {
         let record = parser.read();
         while (record) {
-            if (userIds.length<30)
+            if (userIds.length < 30)
                 userIds.push(record[0]);
             record = parser.read();
         }
@@ -131,16 +153,23 @@ router.post('/user_profile', (req, res) => {
 router.get('/user_index/:fromDate/:toDate/:id', (req, res) => {
     if (!req.params.fromDate || !req.params.toDate || !req.params.id)
         return res.sendStatus(401);
-    fs.exists('../dict/user_' + req.params.fromDate + '_to_' + req.params.toDate + '_cate.json', exists => {
-        if (!exists)
-            return res.sendStatus(404);
-        fs.open('user_' + req.params.fromDate + '_to_' + req.params.toDate + '_cate.json', (err, fd) => {
+    fs.stat('./dict/user_' + req.params.fromDate + '_' + req.params.toDate + '_for_cate.json', err => {
+        if (err) {
+            if (err.code == 'ENOENT')
+                return res.sendStatus(404);
+            else {
+                console.error(err);
+                return res.sendStatus(500);
+            }
+        }
+        fs.readFile('./dict/user_' + req.params.fromDate + '_' + req.params.toDate + '_for_cate.json', (err, data) => {
             if (err) {
                 console.error(err);
                 return res.sendStatus(500);
             }
-            const UserDict = JSON.parse(fd);
-            const userIndex = UserDict.indexOf(req.params.id);
+            const userId = parseInt(req.params.id);
+            const UserDict = JSON.parse(data);
+            const userIndex = UserDict.indexOf(userId);
             if (userIndex < 0)
                 res.sendStatus(404);
             else
@@ -167,7 +196,7 @@ router.get('/wepick/:time/:slot', (req, res) => {
                 slot: elem._id.slice(-2),
                 date: elem._id.slice(0, elem._id.length - 3),
                 title: elem.deal.title,
-                category: elem.deal.category2.title,
+                category: elem.deal.category2.name,
                 categoryId: elem.deal.category2._id
             };
         });
@@ -178,16 +207,44 @@ router.get('/wepick/:time/:slot', (req, res) => {
     });
 });
 
-router.get('/category_dict', (req, res) => {
-    fs.exists('../dict/cate_dict.json', exists => {
-        if (!exists)
-            return res.sendStatus(404);
-        fs.open('../dict/cate_dict.json', (err, fd) => {
-            if (err) {
+router.post('/wals-score', (req, res) => {
+    if (req.body.userId == undefined || !req.body.items || !req.body.filename1 || !req.body.filename2) {
+        res.sendStatus(401);
+        return;
+    }
+    fs.stat('../../'+req.body.filename1 + '.json', err => {
+        if (err) {
+            if (err.code == 'ENOENT')
+                return res.sendStatus(404);
+            else {
                 console.error(err);
                 return res.sendStatus(500);
             }
-            res.send(JSON.parse(fd));
+        }
+        fs.stat('../../' +req.body.filename2 + '.json', err => {
+            if (err) {
+                if (err.code == 'ENOENT')
+                    return res.sendStatus(404);
+                else {
+                    console.error(err);
+                    return res.sendStatus(500);
+                }
+            }
+            const userIndex = req.body.userId;
+
+            const userMatrix = JSON.parse(fs.readFileSync('../../' +req.body.filename1 + '.json'));
+            const userRow = userMatrix[userIndex];
+            const numFeature = userRow.length;
+            const itemMatrix = JSON.parse(fs.readFileSync('../../' +req.body.filename2 + '.json'));
+            let scores = [];
+            req.body.items.forEach(id => {
+                let score = 0;
+                const itemRow = itemMatrix[id];
+                for (let i = 0; i < numFeature; i++)
+                    score += userRow[i] * itemRow[i];
+                scores.push(score);
+            });
+            res.send(scores);
         });
     });
 });
@@ -199,7 +256,7 @@ router.get('/hist/:id/slot/:slot/limit/:limit', (req, res) => {
         // bad naming, I know
         .populate({
             path: 'DealId',
-            populate: {path:'category2'}
+            populate: { path: 'category2' }
         })
         .then(data => {
             if (!data) {
@@ -288,6 +345,45 @@ router.post('/predict', (req, res) => {
             }
             res.send(result.result);
         });
+});
+
+router.post('/wals-matrix', (req, res) => {
+    if (!req.body.fromDate || !req.body.toDate) {
+        res.sendStatus(401);
+        return;
+    }
+
+    let requestData = {
+        dimension: req.body.dimension,
+        weight: req.body.weight,
+        coef: req.body.coef,
+        nIter: req.body.nIter
+    };
+
+    const fromDate = new Date(req.body.fromDate);
+    const toDate = new Date(req.body.toDate);
+    fromMonth = fromDate.getMonth() + 1;
+    if (fromMonth < 10) fromMonth = '0' + fromMonth;
+    fromDay = fromDate.getDate();
+    if (fromDay < 10) fromDay = '0' + fromDay;
+    toMonth = toDate.getMonth() + 1;
+    if (toMonth < 10) toMonth = '0' + toMonth;
+    toDay = toDate.getDate();
+    if (toDay < 10) toDay = '0' + toDay;
+    requestData.dayFrom = fromMonth + '-' + fromDay;
+    requestData.dayTo = toMonth + '-' + toDay;
+
+    client.getMfCateRecommend(requestData, (err, result) => {
+        if (err || result.error > -1) {
+            if (err)
+                console.error(err);
+            console.error(result.error);
+            res.sendStatus(500);
+            return;
+        }
+        delete result.error;
+        res.send(result);
+    });
 });
 
 module.exports = router;

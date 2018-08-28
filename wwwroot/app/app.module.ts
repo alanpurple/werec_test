@@ -19,6 +19,7 @@ import { ErrorDialog, ErrorAlert } from './error.alert';
 import { ConfirmDialog, ConfirmDialogTemplate } from './confirm.dialog';
 import { DealInfoService } from './dealinfo.service';
 import { PredictionService } from './prediction.service';
+import { IdConfirmDialog, WalsSimulator } from './wals-simulator';
 
 @NgModule({
     imports: [
@@ -30,14 +31,14 @@ import { PredictionService } from './prediction.service';
     ],
     declarations: [
         App, Home, ErrorDialog, ConfirmDialogTemplate, PredictionResults,
-        PredictionTable, HistoryViewer
+        PredictionTable, HistoryViewer, WalsSimulator, IdConfirmDialog
     ],
     providers: [
         ErrorAlert, ConfirmDialog, DealInfoService, PredictionService
     ],
     bootstrap: [App],
     entryComponents: [
-        ErrorDialog, ConfirmDialogTemplate
+        ErrorDialog, ConfirmDialogTemplate, IdConfirmDialog
     ]
 })
 export class AppModule { }

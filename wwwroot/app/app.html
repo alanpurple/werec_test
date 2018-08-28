@@ -48,6 +48,12 @@
                     유저 히스토리 보기
                 </button>
             </mat-list-item>
+            <mat-list-item>
+                <button mat-button routerLink="/wals-simulator"
+                        (click)="handleMenu(sidemenu)">
+                    WALS(실시간) simulator
+                </button>
+            </mat-list-item>
         </mat-list>
     </mat-sidenav>
     <router-outlet></router-outlet>

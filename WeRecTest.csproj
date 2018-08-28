@@ -20,6 +20,8 @@
     <Content Remove="wwwroot\app\dealinfo.service.ts" />
     <Content Remove="wwwroot\app\history-viewer.ts" />
     <Content Remove="wwwroot\app\import.request.data.ts" />
+    <Content Remove="wwwroot\app\mf.matrix.data.ts" />
+    <Content Remove="wwwroot\app\mf.request.data.ts" />
     <Content Remove="wwwroot\app\prediction.data.ts" />
     <Content Remove="wwwroot\app\prediction.request.data.ts" />
     <Content Remove="wwwroot\app\prediction.result.data.ts" />
@@ -27,6 +29,7 @@
     <Content Remove="wwwroot\app\prediction.service.ts" />
     <Content Remove="wwwroot\app\prediction.table.ts" />
     <Content Remove="wwwroot\app\user.history.data.ts" />
+    <Content Remove="wwwroot\app\wals-simulator.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -52,6 +55,8 @@
     <TypeScriptCompile Include="wwwroot\app\history-viewer.ts" />
     <TypeScriptCompile Include="wwwroot\app\import.request.data.ts" />
     <TypeScriptCompile Include="wwwroot\app\deal.data.ts" />
+    <TypeScriptCompile Include="wwwroot\app\mf.matrix.data.ts" />
+    <TypeScriptCompile Include="wwwroot\app\mf.request.data.ts" />
     <TypeScriptCompile Include="wwwroot\app\prediction.data.ts" />
     <TypeScriptCompile Include="wwwroot\app\prediction.request.data.ts" />
     <TypeScriptCompile Include="wwwroot\app\prediction.result.data.ts" />
@@ -59,6 +64,7 @@
     <TypeScriptCompile Include="wwwroot\app\prediction.service.ts" />
     <TypeScriptCompile Include="wwwroot\app\prediction.table.ts" />
     <TypeScriptCompile Include="wwwroot\app\user.history.data.ts" />
+    <TypeScriptCompile Include="wwwroot\app\wals-simulator.ts" />
   </ItemGroup>
 
 </Project>

@@ -17,7 +17,7 @@ app.use(cookieParser());
 const rootPath = path.join(__dirname, '../wwwroot');
 app.use(express.static(rootPath));
 
-app.get(['/', '/prediction-results','/prediction-table','/history-viewer'],
+app.get(['/', '/prediction-results','/prediction-table','/history-viewer','/wals-simulator'],
     (req, res) => res.sendFile(path.join(rootPath, 'index.html')));
 
 // prediction result for certain history

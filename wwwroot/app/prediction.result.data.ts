@@ -1,5 +1,8 @@
-﻿export interface PredictionResultData {
+﻿export class PredictionResultData {
     id: number;
+    title: string;
     slot: number;
-    score: number;
+    score: number = 0;
+    category: string;
+    categoryId: number;
 }
