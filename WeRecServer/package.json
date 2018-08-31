@@ -17,7 +17,7 @@
     "elasticsearch": "^15.1.1",
     "express": "^4.16.3",
     "grpc": "1.14.1",
-    "mongoose": "^5.2.10",
+    "mongoose": "^5.2.12",
     "morgan": "^1.9.0",
     "serve-favicon": "^2.5.0"
   }
