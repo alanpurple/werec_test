@@ -9,7 +9,7 @@
     "@types/core-js": "latest",
     "@types/jasmine": "latest",
     "@types/node": "latest",
-    "@types/plotly.js": "^1.38.6",
+    "@types/plotly.js": "^1.38.8",
     "@types/elasticsearch": "latest",
     "codelyzer": "^4.4.4",
     "gulp": "^4.0.0",

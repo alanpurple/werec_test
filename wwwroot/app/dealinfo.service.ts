@@ -12,7 +12,7 @@ export class DealInfoService {
     private client: Client
     constructor(private http: HttpClient, private errorAlert: ErrorAlert) {
         this.client = new Client({
-            host: '10.102.50.47:9200',
+            host: '10.102.61.232:9200',
             log: 'trace'
         });
     }
