@@ -44,7 +44,7 @@ router.get('/single/:id', (req, res) => {
 });
 
 router.get('/category_dict', (req, res) => {
-    fs.stat(path.join(__dirname,'../dict/cate_dict.json'), err => {
+    fs.stat(path.join(__dirname, '../dict/cate_dict.json'), err => {
         if (err) {
             if (err.code === 'ENOENT')
                 return res.sendStatus(404);
@@ -212,7 +212,7 @@ router.post('/wals-score', (req, res) => {
         res.sendStatus(401);
         return;
     }
-    fs.stat('../../'+req.body.filename1 + '.json', err => {
+    fs.stat('../../' + req.body.filename1 + '.json', err => {
         if (err) {
             if (err.code == 'ENOENT')
                 return res.sendStatus(404);
@@ -221,7 +221,7 @@ router.post('/wals-score', (req, res) => {
                 return res.sendStatus(500);
             }
         }
-        fs.stat('../../' +req.body.filename2 + '.json', err => {
+        fs.stat('../../' + req.body.filename2 + '.json', err => {
             if (err) {
                 if (err.code == 'ENOENT')
                     return res.sendStatus(404);
@@ -232,10 +232,10 @@ router.post('/wals-score', (req, res) => {
             }
             const userIndex = req.body.userId;
 
-            const userMatrix = JSON.parse(fs.readFileSync('../../' +req.body.filename1 + '.json'));
+            const userMatrix = JSON.parse(fs.readFileSync('../../' + req.body.filename1 + '.json'));
             const userRow = userMatrix[userIndex];
             const numFeature = userRow.length;
-            const itemMatrix = JSON.parse(fs.readFileSync('../../' +req.body.filename2 + '.json'));
+            const itemMatrix = JSON.parse(fs.readFileSync('../../' + req.body.filename2 + '.json'));
             let scores = [];
             req.body.items.forEach(id => {
                 let score = 0;
@@ -331,7 +331,26 @@ router.post('/predict', (req, res) => {
                 res.sendStatus(500);
                 return;
             }
-            res.send(result.result);
+            let results = result.result;
+            let ids = results.map(elem => elem.id);
+            Deal.find({ _id: { $in: ids } })
+                .populate('category2')
+                .then(deals => {
+                    if (!deals)
+                        return res.sendStatus(404);
+                    results.forEach(elem => {
+                        let info = deals.find(elem2 => elem2._id == elem.id);
+                        if (info != undefined) {
+                            elem.title = info.title;
+                            elem.category = info.category2.name;
+                            elem.categyryId = info.category2._id;
+                        }
+                    });
+                    res.send(results);
+                }).catch(err => {
+                    console.error(err);
+                    res.sendStatus(500);
+                });
         });
     }
     else
@@ -343,7 +362,26 @@ router.post('/predict', (req, res) => {
                 res.sendStatus(500);
                 return;
             }
-            res.send(result.result);
+            let results = result.result;
+            let ids = results.map(elem => elem.id);
+            Deal.find({ _id: { $in: ids } })
+                .populate('category2')
+                .then(deals => {
+                    if (!deals)
+                        return res.sendStatus(404);
+                    results.forEach(elem => {
+                        let info = deals.find(elem2 => elem2._id == elem.id);
+                        if (info != undefined) {
+                            elem.title = info.title;
+                            elem.category = info.category2.name;
+                            elem.categyryId = info.category2._id;
+                        }
+                    });
+                    res.send(results);
+                }).catch(err => {
+                    console.error(err);
+                    res.sendStatus(500);
+                });
         });
 });
 

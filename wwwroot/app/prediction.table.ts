@@ -24,7 +24,7 @@ export class PredictionTable {
     selectedId: number;
     userIds: number[];
     dataSource: MatTableDataSource<{}>;
-    displayedColumns: string[] = ['id', 'slot', 'title', 'score'];
+    displayedColumns: string[] = ['id', 'slot', 'title', 'score','category'];
     isProcessing: boolean = false;
     isRetrievingUsers: boolean = false;
     fromDate: Date;
@@ -62,10 +62,10 @@ export class PredictionTable {
                     user: this.userIds[0],
                     methodName: this.methods[0].method,
                     // default values for wals, unnecessary for other methods
-                    dimension: 30,
+                    dimension: 13,
                     weight: 0.5,
                     coef: 2.0,
-                    nIter: 30
+                    nIter: 10
                 };
                 this.periodFixed = true;
             },
@@ -91,16 +91,6 @@ export class PredictionTable {
                 this.dataSource.data.slice();
                 this.dataSource.paginator = this.paginator;
                 this.dataSource.sort = this.sort;
-                this.dataSource.data.forEach(elem => {
-                    this.dealInfoService.getItem(elem['id'])
-                        .then(body => {
-                            let response = body.hits.hits[0];
-                            elem['title'] = response._source['_2'];
-                            elem['url'] = response._source['_3'];
-                        }, err => {
-                            console.error(err);
-                        });
-                });
                 
             }, err => this.errorAlert.open(err));
     }

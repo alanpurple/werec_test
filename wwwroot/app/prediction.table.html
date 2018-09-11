@@ -75,6 +75,10 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>score</th>
         <td mat-cell *matCellDef="let row">{{row.score}}</td>
     </ng-container>
+    <ng-container matColumnDef="category">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>category</th>
+        <td mat-cell *matCellDef="let row">{{row.category}}</td>
+    </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
