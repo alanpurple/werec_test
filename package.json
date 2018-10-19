@@ -10,7 +10,6 @@
     "@types/jasmine": "latest",
     "@types/node": "latest",
     "@types/plotly.js": "^1.38.12",
-    "@types/elasticsearch": "latest",
     "codelyzer": "^4.5.0",
     "gulp": "^4.0.0",
     "gulp-clean-css": "^3.10.0",
