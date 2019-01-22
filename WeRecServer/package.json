@@ -12,11 +12,11 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",
-    "csv-parse": "^4.2.0",
-    "debug": "4.1.0",
+    "csv-parse": "^4.3.1",
+    "debug": "4.1.1",
     "express": "^5.0.0-alpha.7",
-    "grpc": "1.17.0",
-    "mongoose": "^5.4.0",
+    "grpc": "1.18.0",
+    "mongoose": "^5.4.5",
     "morgan": "^1.9.1",
     "serve-favicon": "^2.5.0"
   }
